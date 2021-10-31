@@ -5,6 +5,8 @@
 package ciclo3.Web;
 
 import ciclo3.Modelo.Reservation;
+import ciclo3.Reportes.ContadorClients;
+import ciclo3.Reportes.StatusReservas;
 import ciclo3.Servicios.ServiciosReservation;
 import java.util.List;
 import java.util.Optional;
@@ -57,4 +59,24 @@ public class ReservationWeb {
         return servicios.deleteReservation(idReservation);
     }
     
+    
+     @GetMapping("/report-clients")
+    public List<ContadorClients> getReservationsReportClient(){
+        return servicios.getTopClients();
 }
+
+    @GetMapping("/report-dates/{dateOne}/{dateTwo}")
+    public List<Reservation> getReservationsReportDates(@PathVariable("dateOne") String dateOne,@PathVariable("dateTwo") String dateTwo){
+        return servicios.getReservationsPeriod(dateOne,dateTwo);
+    }
+    @GetMapping("/report-dates/amount/{dateOne}/{dateTwo}")
+    public Integer getReservationsReportDatesAmount(@PathVariable("dateOne") String dateOne,@PathVariable("dateTwo") String dateTwo){
+        return servicios.getReservationsPeriod(dateOne,dateTwo).size();
+    }
+
+    @GetMapping("/report-status")
+    public StatusReservas getReservationsStatusReport(){
+        return servicios.getReservationsStatusReport();
+    }
+}
+
